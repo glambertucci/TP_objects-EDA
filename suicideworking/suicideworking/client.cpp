@@ -5,7 +5,7 @@
 #include <boost/timer/timer.hpp>
 #include <boost/exception_ptr.hpp> 
 
-const string CLIENT_PORT = "12975";
+const string CLIENT_PORT = "12345";
 
 client::client() {
 	IO_handler = new boost::asio::io_service();
