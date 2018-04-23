@@ -6,11 +6,11 @@
 
 using namespace std;
 
-const int HELLO_PORT = 12975;
+const int HELLO_PORT = 12345;
 
 
 void server::writeCompletitionCallback(const boost::system::error_code& error, std::size_t transfered_bytes) {
-	//std::cout << std::endl << "Write Callback called" << std::endl;
+	std::cout << std::endl << "Write Callback called" << std::endl;
 }
 void server::wait_for_message(char *ans, int *sz) {
 	size_t len;
@@ -20,8 +20,8 @@ void server::wait_for_message(char *ans, int *sz) {
 	do {
 		len = this->socket_forServer->read_some(boost::asio::buffer(buf, 30), error);
 	} while ((error.value() == WSAEWOULDBLOCK));
-	//cout << "somebody said " << buf << '\n';
-	///cout << "size of message " << len << '\n';
+	cout << "somebody said " << buf << '\n';
+	cout << "size of message " << len << '\n';
 	for (int i = 0; i < len; i++) {
 		ans[i] = buf[i];
 	}
@@ -52,14 +52,14 @@ server::server() {
 	socket_forServer = new boost::asio::ip::tcp::socket(*IO_handler);
 	server_acceptor = new boost::asio::ip::tcp::acceptor(*IO_handler,
 		boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(), HELLO_PORT));
-	//cout << std::endl << "Ready. Port " << HELLO_PORT << " created" << std::endl;
+	cout << std::endl << "Ready. Port " << HELLO_PORT << " created" << std::endl;
 }
 void server::close_connection() {
 	server_acceptor->close();
 	socket_forServer->close();
 }
 server::~server() {
-	//cout << "closing server \n";
+	cout << "closing server \n";
 	server_acceptor->close();
 	socket_forServer->close();
 	delete server_acceptor;
