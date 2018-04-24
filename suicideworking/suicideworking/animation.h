@@ -8,6 +8,7 @@
 using namespace std;
 bool blocking_anim(char letra, double width, double height);
 void mostrar_secuencia(char& letra);
+
 class animation
 {
 private:
@@ -22,8 +23,6 @@ public:
 	void draw_exp2(float height, float width);
 	void draw_homero(float height, float width);
 	
-
-	vector<ALLEGRO_BITMAP*> background;
 	char& get_anim_id(void);
 
 	void play_anim(char anim_type, float MAX_SCREEN_WIDTH, float MAX_SCREEN_HEIGHT);

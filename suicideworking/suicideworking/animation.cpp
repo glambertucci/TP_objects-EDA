@@ -115,7 +115,7 @@ void animation::draw_cat(float height, float width)
 
 	string files[12];
 	for (int i = 0; i < 12; i++)
-		files[i] = "Pictures/Cat Running/Cat_Running-F" + to_string(i + 1) + ".png";
+		files[i] = "Pictures/Cat Running/Cat Running-F" + to_string(i + 1) + ".png";
 	ALLEGRO_BITMAP * bitmaps[12];
 	for (int i = 0; i < 12; i++)
 		bitmaps[i] = al_load_bitmap(files[i].c_str());

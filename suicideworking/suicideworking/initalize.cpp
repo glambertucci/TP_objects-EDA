@@ -34,11 +34,11 @@ int allegro_init(void) {
 int parseCallback(char *key, char *value, void *userData) {
 	data_t *ud = (data_t*)userData;
 
-	if (strcmp(value, "ip") == 0) {
+	if (key!=NULL?(!strcmp(key, "ip")):false) {
 		ud->ip = string(value);
 		cout << "setting ip to " << value << '\n';
 	}
-	else if (strcmp(value, "iniciar") == 0) {
+	else if (!strcmp(value, "iniciar") ) {
 		ud->iniciar = 1;
 		cout << "setting iniciar to 1 \n";
 	}

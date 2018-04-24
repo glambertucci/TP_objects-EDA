@@ -1,5 +1,6 @@
 #include "network.h"
-
+//Tendo que arreglar
+//que count se mande aumentado, y que las maquinas empiezan en 1 no 0
 
 network::network() {
 	cout << "starting network object \n";
@@ -25,7 +26,7 @@ bool iniciar(vector <string> &direcciones, string mi_ip) {
 	data.cnt_maq = direcciones.size();
 
 
-	if (mi_ip == direcciones[data.seq[0]]) { // empiezo yo!
+	if (mi_ip == direcciones[data.seq[0]]) { // empiezo yo!//hot fix	
 											 cout << "soy la maquina inicial, y empiezo yo la animacion \n";
 		mostrar_secuencia(data.animation);
 		data.actual++;
@@ -35,7 +36,7 @@ bool iniciar(vector <string> &direcciones, string mi_ip) {
 	{//Trucazo para que client se suicide
 
 		client my_client;
-		my_client.startConnection(direcciones[data.seq[data.actual]].c_str());
+		my_client.startConnection(direcciones[data.seq[data.actual]].c_str());//HOTFIX
 		if (!my_client.success()) {
 			cout << "could not connect, fatal error \n";
 			return 0;
@@ -93,7 +94,7 @@ bool escuchar(vector <string> &direcciones) {
 	if (data.actual == data.cnt_maq) return 1; // no need to respond message
 
 	client my_client;
-	my_client.startConnection(direcciones[data.seq[data.actual]].c_str());
+	my_client.startConnection(direcciones[data.seq[data.actual]].c_str());//hotfix
 	if (!my_client.success()) {
 		cout << "could not connect, fatal error \n";
 		return 0;
