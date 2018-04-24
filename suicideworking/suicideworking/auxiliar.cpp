@@ -20,25 +20,17 @@ ostream& operator<<(ostream& o, package_data& data) {
 
 
 string compose_msg(package_data &data) {
-	string ans = "";
-	ans.push_back(data.animation);
-	ans.push_back(data.actual);
+	char arr[2] = { data.animation,0 };
+	string ans = arr;
+	ans += data.actual;
+
 	for (int i = 0; i < data.cnt_maq; i++) {
 		ans.push_back(data.seq[i]);
 	}
-	/*cout << "SE ENVIA \n";
-	for (int i = 0; i < ans.size(); i++) {
-	cout << int(ans[i]) << ' ';
-	}
-	cout << '\n';*/
+
 	return ans;
 }
 void decompose_msg(string msg, package_data &data) {
-	/*cout << "SE RECIBE \n";
-	for (int i = 0; i < msg.size(); i++) {
-	cout << int(msg[i]) << ' ';
-	}
-	cout << '\n';*/
 
 	data.animation = msg[0];
 	data.actual = msg[1];

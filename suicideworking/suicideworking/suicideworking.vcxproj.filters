@@ -33,13 +33,10 @@
     <ClCompile Include="animation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="anim_atributes.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="auxiliar.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="testing.cpp">
+    <ClCompile Include="initalize.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -59,16 +56,10 @@
     <ClInclude Include="animation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="anim_atributes.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="auxiliar.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="testing.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="config.h">
+    <ClInclude Include="initialize.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

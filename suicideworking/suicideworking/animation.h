@@ -4,28 +4,29 @@
 #include <iostream>
 #include <allegro5\allegro5.h>
 #include <string>
+#include <allegro5\allegro_audio.h>
 using namespace std;
-
+bool blocking_anim(char letra, double width, double height);
+void mostrar_secuencia(char& letra);
 class animation
 {
 private:
 	char anim_id;
-	string anim_prefix;
-	unsigned int anim_cant_img;
-	double anim_period;
-	double speed;
-public:
-	animation(char name, string pref, unsigned int im_cant, double per, double vel);
 
-	void load_imgs(unsigned int qnt, string prefix, vector<ALLEGRO_BITMAP*>&, vector<ALLEGRO_BITMAP*>&);
-	vector<ALLEGRO_BITMAP*> p2anim_lib;
+public:
+	animation(char name);
+	void draw_cat(float height, float width);
+	void draw_sonic(float width);
+	void draw_mario(float width);
+	void draw_exp(float height, float width);
+	void draw_exp2(float height, float width);
+	void draw_homero(float height, float width);
+	
+
 	vector<ALLEGRO_BITMAP*> background;
 	char& get_anim_id(void);
-	double& get_anim_per(void);
-	double& get_speed(void);
-	string& get_anim_prefix(void);
-	unsigned int& get_anim_cant_img(void);
-	void play_anim(char anim_type, int& i, float& k, float MAX_SCREEN_WIDTH, float MAX_SCREEN_HEIGHT, bool& sense, unsigned int img_qnt);
+
+	void play_anim(char anim_type, float MAX_SCREEN_WIDTH, float MAX_SCREEN_HEIGHT);
 	~animation();
 };
 

@@ -1,99 +1,63 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <string>
 #include "parser.h"
+#include "initialize.h"
 
-#define OPCION_CNT 2
-#define PARAMETRO_CNT 1
+int parseCmdLine(int argc, char *argv[], pCallback p, void * userData) {
+	int final = 0, result = 0, posible = 0, error = false;
 
-enum { BUSCAR_INICIAL, LEER_STRING };
-enum { PARAMETRO, OPCION };
+	for (int i = 1; i<argc;) {
+		if (argv[i][0] == '-') { //Si el primer caracter es un - sera una opcion (opcion es clave+valor)
+			if (argv[i][1] == 0) //si pasan -  solo
+			{
+				error = ERROR2;
+				i = argc;
+			}
+			else if ((i + 1) >= argc)
+			{
+				error = ERROR1; //si es el ultimo caracter obviamente no tiene valor
+				i++;
+			}
 
-
-
-void init_action(int type, t_action* action, char *key, char *value) {
-	action->type = type;
-	switch (type) {
-	case PARAMETRO:
-		action->key = key;
-		action->value = NULL;
-		break;
-	case OPCION:
-		action->key = key;
-		action->value = value;
-		break;
-	}
-}
-
-int parseCmdLine(int argc, char *argv[], pCallback p, void *userData) {
-
-
-	int estado = BUSCAR_INICIAL; // buscamos el primer guion o letra
-
-	int error = 0;
-	int cnt_actions = 0;
-
-	t_action** actions = (t_action**)malloc(sizeof(t_action*)*argc); // nunca tendremos mas de argc acciones 
-
-	char *buffer = NULL;
-
-	for (int i = 1; i < argc; i++) {
-		switch (estado) {
-		case BUSCAR_INICIAL:
-			if (argv[i][0] == '-') {
-				buffer = &(argv[i][1]);
-				if (strlen(buffer) == 0) {
-					error = 1; // type 2
+			else
+			{
+				posible = p(&(argv[i][1]), argv[i + 1], userData);
+				if (posible >= 0) {
+					std::string ip = argv[i+1];
+					((data_t*)userData)->ip = ip;
+					i += 2; //avanzo 2 parametros
+					result += posible;
 				}
-				estado = LEER_STRING;
+				else {
+					error = ERROR3;
+					i = argc;
+				}
+			}
+		}
+		else {
+			posible = p(NULL, argv[i], userData); //si no es opcion es parametro
+			if (posible >= 0) {
+				i++;
+				result += posible;
+
 			}
 			else {
-				actions[cnt_actions] = (t_action*)malloc(sizeof(t_action));
-				init_action(PARAMETRO, actions[cnt_actions], argv[i], NULL);
-				cnt_actions++;
-			}
-			break;
-		case LEER_STRING:
-			actions[cnt_actions] = (t_action*)malloc(sizeof(t_action));
-			init_action(OPCION, actions[cnt_actions], buffer, argv[i]);
-			cnt_actions++;
-			estado = BUSCAR_INICIAL;
-			break;
-		}
-
-		if (error) break; /// no tiene ningun sentido seguir
-	}
-	if (estado == LEER_STRING) {
-		error = 1; // type 1
-	}
-
-	if (error == 0) { // if success
-		for (int i = 0; i < cnt_actions; i++) {
-			int success;
-			switch (actions[i]->type) {
-			case OPCION:
-				success = p(actions[i]->key, actions[i]->value, userData);
-				break;
-			case PARAMETRO:
-				success = p(actions[i]->key, NULL, userData);
-				break;
-			}
-			if (!success) {
-				error = 1;
-				break;
+				error = ERROR3;
+				i = argc;
 			}
 		}
 	}
+	if (error == ERROR1)
+		final = ERROR1;
+	else if (error == ERROR2)// reconoce el error
+		final = ERROR2;
+	else if (error == ERROR3)
+		final = ERROR3;
+	else
+		final = result;
+	((data_t*)userData)->bad = false;
 
-	for (int i = 0; i < cnt_actions; i++) {
-		free(actions[i]);
-	}
-	free(actions);
-
-	if (error == 0) {
-		return cnt_actions;
-	}
-	else {
-		return -1;
-	}
+	return final;
 }

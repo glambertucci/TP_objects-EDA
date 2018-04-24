@@ -29,7 +29,6 @@ void client::startConnection(const char* host) {
 	cout << "Trying to connect to " << host << " on port " << CLIENT_PORT << std::endl;
 	try {
 		boost::asio::connect(*socket_forClient, endpoint);
-		//socket_forClient->non_blocking(true);
 	}
 	catch (std::exception const&  ex) {
 		cout << "could not connect" << '\n';
@@ -68,7 +67,6 @@ void client::receiveMessage(char *ans, int *size, int maxsize) {
 
 void client::send_message(const char *msg, int size) {
 
-	//cout << size << '\n';
 	size_t len;
 	boost::system::error_code error;
 

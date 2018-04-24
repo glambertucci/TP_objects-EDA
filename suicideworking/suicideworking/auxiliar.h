@@ -3,7 +3,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include "config.h"
+#include "initialize.h"
 
 using namespace std;
 

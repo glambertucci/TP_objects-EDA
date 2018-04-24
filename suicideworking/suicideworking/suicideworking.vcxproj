@@ -134,25 +134,22 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="animation.cpp" />
-    <ClCompile Include="anim_atributes.cpp" />
     <ClCompile Include="auxiliar.cpp" />
     <ClCompile Include="client.cpp" />
+    <ClCompile Include="initalize.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="network.cpp" />
     <ClCompile Include="parser.cpp" />
     <ClCompile Include="server.cpp" />
-    <ClCompile Include="testing.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="animation.h" />
-    <ClInclude Include="anim_atributes.h" />
     <ClInclude Include="auxiliar.h" />
     <ClInclude Include="client.h" />
-    <ClInclude Include="config.h" />
+    <ClInclude Include="initialize.h" />
     <ClInclude Include="network.h" />
     <ClInclude Include="parser.h" />
     <ClInclude Include="server.h" />
-    <ClInclude Include="testing.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
