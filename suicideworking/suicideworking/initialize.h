@@ -3,14 +3,13 @@
 #include <allegro5\allegro_audio.h>
 #include <allegro5\allegro.h>
 #include <allegro5\allegro_image.h>
-int allegro_init();
-
-int parseCallback(char *key, char *value, void *userData);
-
 #include <string>
-
-const int MAX_MAQUINAS = 256;
+const int MAX_MAQUINAS = 255;
 const std::string DIRECCIONES_FILE = "direcciones.txt";
+
+int allegro_init();//inicia allegro
+int parseCallback(char *key, char *value, void *userData);//callback
+
 class data_t {
 public:
 	std::string ip;

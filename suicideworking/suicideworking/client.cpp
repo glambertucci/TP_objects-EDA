@@ -15,7 +15,6 @@ client::client() {
 }
 
 client::~client() {
-	cout << "closing client\n";
 	socket_forClient->close();
 	delete client_resolver;
 	delete socket_forClient;
@@ -26,11 +25,11 @@ void client::startConnection(const char* host) {
 	endpoint = client_resolver->resolve(
 		boost::asio::ip::tcp::resolver::query(host, CLIENT_PORT));
 
-	cout << "Trying to connect to " << host << " on port " << CLIENT_PORT << std::endl;
+	cout << "Trying to connect to " << host << " on port " << CLIENT_PORT <<endl;
 	try {
 		boost::asio::connect(*socket_forClient, endpoint);
 	}
-	catch (std::exception const&  ex) {
+	catch (exception const&  ex) {
 		cout << "could not connect" << '\n';
 		failure = 1;
 	}
@@ -41,35 +40,24 @@ bool client::success() {
 }
 
 void client::receiveMessage(char *ans, int *size, int maxsize) {
-
 	boost::system::error_code error;
-	char buf[512];
-	size_t len = 0;
-
-	len = socket_forClient->read_some(boost::asio::buffer(buf), error);
-
-	if (!error) {
-		std::cout << std::endl << "Server said: " << buf << std::endl;
-	}
-	else {
+	char buf[1+255+1];
+	size_t len = socket_forClient->read_some(boost::asio::buffer(buf), error);
+	if (error) {
 		std::cout << "Error while trying to connect to server " << error.message() << std::endl;
 		failure = 1;
 		*size = 0;
 		return;
 	}
-	int size_buf = strlen(buf);
-	for (int i = 0; i < size_buf; i++) {
+	for (int i = 0; i < strlen(buf); i++) {
 		ans[i] = buf[i];
 	}
-	ans[size_buf] = '\0';
-	*size = size_buf;
+	ans[strlen(buf)] = '\0';
+	*size = strlen(buf);
 }
 
 void client::send_message(const char *msg, int size) {
-
 	size_t len;
 	boost::system::error_code error;
-
 	len = socket_forClient->write_some(boost::asio::buffer(msg, size), error);
-
 }

@@ -12,12 +12,8 @@ class server {
 public:
 	server();
 	void start_to_listen();
-
 	void sendMessage(char *buf, int size);
-	void wait_for_message(char *ans, int *sz);
-	void close_connection();
-
-	void writeCompletitionCallback(const boost::system::error_code& error, std::size_t transfered_bytes);
+	std::string wait_for_message();
 	~server();
 
 private:

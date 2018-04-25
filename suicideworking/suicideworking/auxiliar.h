@@ -4,11 +4,10 @@
 #include <string>
 #include <vector>
 #include "initialize.h"
-
 using namespace std;
 
+bool preguntar_continuar();
 
-/// data that has to be sent
 struct package_data {
 	int seq[MAX_MAQUINAS];
 	int cnt_maq;
@@ -21,5 +20,3 @@ void decompose_msg(string msg, package_data &data);
 
 void preguntar_secuencia(char *letra, int seq[MAX_MAQUINAS], vector <string> &direcciones);
 int leer_direcciones(vector <string> &direcciones);
-void complete_string(string &str_ans, char* ans, int sz);
-

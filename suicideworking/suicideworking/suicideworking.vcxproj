@@ -23,6 +23,7 @@
     <ProjectGuid>{A82F2419-EB54-4893-BE16-956755C29097}</ProjectGuid>
     <RootNamespace>suicideworking</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+    <ProjectName>Neworking</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -103,6 +104,9 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
+    <ProjectReference>
+      <UseLibraryDependencyInputs>true</UseLibraryDependencyInputs>
+    </ProjectReference>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -169,6 +173,8 @@
     <Import Project="..\packages\boost_system-vc140.1.67.0.0\build\boost_system-vc140.targets" Condition="Exists('..\packages\boost_system-vc140.1.67.0.0\build\boost_system-vc140.targets')" />
     <Import Project="..\packages\boost_timer-vc141.1.67.0.0\build\boost_timer-vc141.targets" Condition="Exists('..\packages\boost_timer-vc141.1.67.0.0\build\boost_timer-vc141.targets')" />
     <Import Project="..\packages\boost_timer-vc140.1.67.0.0\build\boost_timer-vc140.targets" Condition="Exists('..\packages\boost_timer-vc140.1.67.0.0\build\boost_timer-vc140.targets')" />
+    <Import Project="..\packages\PDCurses34.redist.3.4.0.1\build\native\PDCurses34.redist.targets" Condition="Exists('..\packages\PDCurses34.redist.3.4.0.1\build\native\PDCurses34.redist.targets')" />
+    <Import Project="..\packages\PDCurses34.3.4.0.1\build\native\PDCurses34.targets" Condition="Exists('..\packages\PDCurses34.3.4.0.1\build\native\PDCurses34.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -187,5 +193,7 @@
     <Error Condition="!Exists('..\packages\boost_system-vc140.1.67.0.0\build\boost_system-vc140.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\boost_system-vc140.1.67.0.0\build\boost_system-vc140.targets'))" />
     <Error Condition="!Exists('..\packages\boost_timer-vc141.1.67.0.0\build\boost_timer-vc141.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\boost_timer-vc141.1.67.0.0\build\boost_timer-vc141.targets'))" />
     <Error Condition="!Exists('..\packages\boost_timer-vc140.1.67.0.0\build\boost_timer-vc140.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\boost_timer-vc140.1.67.0.0\build\boost_timer-vc140.targets'))" />
+    <Error Condition="!Exists('..\packages\PDCurses34.redist.3.4.0.1\build\native\PDCurses34.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\PDCurses34.redist.3.4.0.1\build\native\PDCurses34.redist.targets'))" />
+    <Error Condition="!Exists('..\packages\PDCurses34.3.4.0.1\build\native\PDCurses34.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\PDCurses34.3.4.0.1\build\native\PDCurses34.targets'))" />
   </Target>
 </Project>

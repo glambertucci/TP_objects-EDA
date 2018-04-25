@@ -6,26 +6,18 @@
 #include <string>
 #include <allegro5\allegro_audio.h>
 using namespace std;
-bool blocking_anim(char letra, double width, double height);
+bool blocking_anim(char letra);
 void mostrar_secuencia(char& letra);
 
 class animation
 {
-private:
-	char anim_id;
-
 public:
-	animation(char name);
-	void draw_cat(float height, float width);
-	void draw_sonic(float width);
-	void draw_mario(float width);
-	void draw_exp(float height, float width);
-	void draw_exp2(float height, float width);
-	void draw_homero(float height, float width);
-	
-	char& get_anim_id(void);
-
-	void play_anim(char anim_type, float MAX_SCREEN_WIDTH, float MAX_SCREEN_HEIGHT);
-	~animation();
+	void draw_cat();
+	void draw_sonic();
+	void draw_mario();
+	void draw_exp();
+	void draw_exp2();
+	void draw_homero();
+	void play_anim(char anim_letra);
 };
 

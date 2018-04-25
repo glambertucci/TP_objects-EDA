@@ -1,9 +1,7 @@
 #define _WIN32_WINNT 0x0501
-
+//grupo 3
 #include <iostream>
-#include <cstring>
 #include <vector>
-#include <time.h>
 #include "server.h"
 #include "client.h"
 #include "parser.h"
@@ -12,7 +10,6 @@
 #include "network.h"
 #include <allegro5\allegro_acodec.h>
 #include <allegro5\allegro_audio.h>
-
 #include "initialize.h"
 #include "boost/asio.hpp"
 #include "boost/function.hpp"
@@ -23,11 +20,8 @@
 using namespace std;
 
 int main(char argc, char *argv[]) {
-
-	//iniciliazacion de allegro
-	if (allegro_init() == -1) {
-		return -1;
-	}
+	bool exit = false, close = false;
+	if (allegro_init() == -1) {return -1;}	//iniciliazacion de allegro
 	vector <string> direcciones;
 	if (!leer_direcciones(direcciones)) {
 		cout << "no se puede abrir el archivo de direcciones \n";
@@ -43,25 +37,21 @@ int main(char argc, char *argv[]) {
 		cout << "No se especifico IP ... \n";
 		return -1;
 	}
-	if (data.iniciar) {
-		cout << "comenzando como maquina que inicia \n";
-		while (1) {
-			if (!iniciar(direcciones, data.ip)) {
-				break;
-			}
+	do{
+		if (data.iniciar) {
+			iniciar(direcciones, data.ip);
+			data.iniciar = false;
 		}
-	}
-	else {
-		cout << "iniciando como maquina que escucha \n";
-		while (1) {
-			if (!escuchar(direcciones)) {
-				break;
-			}
+		else if (!close){
+			close = escuchar(direcciones);
+			cout << "iniciando como maquina que escucha \n";
 		}
-	}
-	cout << "ending program \n";
+		else{
+			if( preguntar_continuar()){{ data.iniciar = 1; close = false; }}
+			else exit = true;
+		}
+	} while (!exit);
 	return 0;
 }
-
 
 

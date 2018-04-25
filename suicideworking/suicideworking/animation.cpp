@@ -1,13 +1,24 @@
 #include "animation.h"
 
-bool blocking_anim(char letra, double width, double height) {
+const float width = 1920.0;
+const float height = 700.0;
+
+
+void mostrar_secuencia(char& letra) {
+	cout << "mostrando la secuencia " << letra << '\n';
+	if (blocking_anim(letra)) {
+		cout << "la animacion " << letra << " se pudo realizar satisfactoriamente!" << endl;
+	}
+	else {
+		cout << "hubo un error al tratar de reproducir animacion " << letra << " " << endl;
+	}
+}
+
+bool blocking_anim(char letra) {
 	ALLEGRO_DISPLAY * display = nullptr;
 	ALLEGRO_SAMPLE * music = nullptr;
 
 	display = al_create_display(width, height);
-	if (display == nullptr) {
-		return -1;
-	}
 
 	switch (letra)
 	{
@@ -29,90 +40,44 @@ bool blocking_anim(char letra, double width, double height) {
 	case 'F':
 		music = al_load_sample("Music/sonic_music.wav");
 		break;
+
 	};
-
-	if (!music) {
-		al_destroy_display(display);
-		return -1;
-	}
-
 	al_play_sample(music, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_LOOP, NULL);
-	animation a1(letra);
-	a1.play_anim(letra, width, height);
+	animation a1;
+	a1.play_anim(letra);
 	al_destroy_display(display);
 	al_destroy_sample(music);
+	return 1;
 
 }
 
-const float MAX_WIDTH = 1920;
-const float MAX_HEIGHT = 700;
 
-void mostrar_secuencia(char& letra) {
-	cout << "mostrando la secuencia " << letra << '\n';
-	if (blocking_anim(letra, MAX_WIDTH, MAX_HEIGHT)) {
-		cout << "la animacion " << letra << " se pudo realizar satisfactoriamente!" << endl;
-	}
-	else {
-		cout << "hubo un error al tratar de reproducir animacion " << letra << " " << endl;
-	}
-}
-
-animation::animation(char name)
+void animation::play_anim(char anim_letra)
 {
-	anim_id = name;
-
-
-
-
-}
-
-char& animation::get_anim_id(void)
-{
-	return anim_id;
-}
-
-
-
-
-
-void animation::play_anim(char anim_type, float MAX_SCREEN_WIDTH, float MAX_SCREEN_HEIGHT)
-{
-	switch (anim_type) {
+	switch (anim_letra) {
 	case 'A':
-		draw_cat(MAX_SCREEN_HEIGHT, MAX_SCREEN_WIDTH);
+		draw_cat();
 		break;
 	case 'B':
-		draw_exp(MAX_SCREEN_HEIGHT, MAX_SCREEN_WIDTH);
+		draw_exp();
 		break;
 	case 'C':
-		draw_exp2(MAX_SCREEN_HEIGHT, MAX_SCREEN_WIDTH);
+		draw_exp2();
 		break;
 	case 'D':
-		draw_homero(MAX_SCREEN_HEIGHT, MAX_SCREEN_WIDTH);
+		draw_homero();
 		break;
 	case 'E':
-		draw_mario(MAX_SCREEN_WIDTH);
+		draw_mario();
 		break;
 	case 'F':
-		draw_sonic(MAX_SCREEN_WIDTH);
+		draw_sonic();
 		break;
-
 	};
 }
 
-
-animation::~animation()
+void animation::draw_cat()
 {
-
-}
-
-
-
-
-void animation::draw_cat(float height, float width)
-{
-
-
 	string files[12];
 	for (int i = 0; i < 12; i++)
 		files[i] = "Pictures/Cat Running/Cat Running-F" + to_string(i + 1) + ".png";
@@ -135,17 +100,14 @@ void animation::draw_cat(float height, float width)
 		}
 	}
 }
-void animation::draw_exp(float height, float width)
+void animation::draw_exp()
 {
-
 	string files[8];
 	for (int i = 0; i < 8; i++)
 		files[i] = "Pictures/Explosion 1/Explosion 1-F" + to_string(i + 1) + ".png";
 	ALLEGRO_BITMAP * bitmaps[8];
 	for (int i = 0; i < 8; i++)
 		bitmaps[i] = al_load_bitmap(files[i].c_str());
-	int x = -al_get_bitmap_width(bitmaps[0]);
-
 	for (int i = 0; i < 8; i++)
 	{
 
@@ -155,31 +117,22 @@ void animation::draw_exp(float height, float width)
 
 	}
 }
-void animation::draw_exp2(float height, float width)
+void animation::draw_exp2()
 {
-
-
 	string files[48];
 	for (int i = 0; i < 48; i++)
 		files[i] = "Pictures/Explosion 2/Explosion 2-F" + to_string(i + 1) + ".png";
 	ALLEGRO_BITMAP * bitmaps[48];
 	for (int i = 0; i < 48; i++)
 		bitmaps[i] = al_load_bitmap(files[i].c_str());
-	int x = -al_get_bitmap_width(bitmaps[0]);
-
-	for (int i = 0; i < 48; i++)
-	{
-
+	for (int i = 0; i < 48; i++){
 		al_draw_scaled_bitmap(bitmaps[i], 0, 0, al_get_bitmap_width(bitmaps[i]), al_get_bitmap_height(bitmaps[i]), 0, 0, width, height, 0);
 		al_flip_display();
 		al_rest(0.1);
-
 	}
 }
-void animation::draw_homero(float height, float width)
+void animation::draw_homero()
 {
-
-
 	string files[10];
 	for (int i = 0; i < 10; i++)
 		files[i] = "Pictures/Homer Dance/homerdance-F" + to_string(i + 1) + ".png";
@@ -189,10 +142,8 @@ void animation::draw_homero(float height, float width)
 	ALLEGRO_BITMAP * background;
 	background = al_load_bitmap("Pictures/Background/backgroundHomero.png");//ACORDATE DE PONER UNA IMAGEN
 	int x = -al_get_bitmap_width(bitmaps[0]);
-	while (x  < (width - 50))
-	{
-		for (int i = 0; i < 10; i++)
-		{
+	while (x  < (width - 50)){
+		for (int i = 0; i < 10; i++){
 			al_draw_bitmap(background, 0, 0, 0);
 			al_draw_bitmap(bitmaps[i], x, height / 2, 0);
 			al_flip_display();
@@ -202,10 +153,8 @@ void animation::draw_homero(float height, float width)
 		}
 	}
 }
-void animation::draw_mario(float width)
+void animation::draw_mario()
 {
-	
-
 	string files[12];
 	for (int i = 0; i < 12; i++)
 		files[i] = "Pictures/Super Mario/Super Mario Running-F" + to_string(i + 1) + ".png";
@@ -215,23 +164,18 @@ void animation::draw_mario(float width)
 	ALLEGRO_BITMAP * background;
 	background = al_load_bitmap("Pictures/Background/backgroundMario.png");//ACORDATE DE PONER UNA IMAGEN
 	int x = -al_get_bitmap_width(bitmaps[0]);
-	while (x  < (width - 50))
-	{
-		for (int i = 0; i < 12; i++)
-		{
+	while (x  < (width - 50)){
+		for (int i = 0; i < 12; i++){
 			al_draw_bitmap(background, 0, 0, 0);
 			al_draw_bitmap(bitmaps[i], x, 0, 0);
 			al_flip_display();
 			x += 2;
 			al_rest(0.04);
-
 		}
 	}
 }
-void animation::draw_sonic(float width)
+void animation::draw_sonic()
 {
-
-
 	string files[10];
 	for (int i = 0; i < 10; i++)
 		files[i] = "Pictures/Sonic/Sonic Running-F" + to_string(i + 1) + ".png";
@@ -241,18 +185,15 @@ void animation::draw_sonic(float width)
 	ALLEGRO_BITMAP * background;
 	background = al_load_bitmap("Pictures/Background/backgroundSonic.png");//ACORDATE DE PONER UNA IMAGEN
 	int x = -al_get_bitmap_width(bitmaps[0]);
-	while (x  < (width - 200))
-	{
-		for (int i = 0; i < 4; i++)
-		{
+	while (x  < (width - 200)){
+		for (int i = 0; i < 4; i++){
 			al_draw_bitmap(background, 0, 0, 0);
 			al_draw_bitmap(bitmaps[i], x, 0, ALLEGRO_FLIP_HORIZONTAL);
 			al_flip_display();
 			al_rest(0.06);
 		}
 		x += 70;
-		for (int i = 4; i < 10; i++)
-		{
+		for (int i = 4; i < 10; i++){
 			al_draw_bitmap(background, 0, 0, 0);
 			al_draw_bitmap(bitmaps[i], x, 0, ALLEGRO_FLIP_HORIZONTAL);
 			al_flip_display();
